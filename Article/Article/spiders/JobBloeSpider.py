@@ -12,8 +12,7 @@ from Article.items import JobBoleArticleItem, ArticleItemLoader
 class JobSpider(scrapy.Spider):
 
     name = 'job'
-    allowed_domains = ['blog.jobbole.com']
-    # start_urls = ['http://blog.jobbole.com/113954/']
+    # allowed_domains = ['blog.jobbole.com']
     start_urls = ['http://blog.jobbole.com/all-posts/']
 
     handle_http_status_list = [404]
@@ -44,8 +43,10 @@ class JobSpider(scrapy.Spider):
 
         # 提取下一页并交给scrapy进行下载
         next_url = response.css(".next.page-numbers::attr(href)").extract_first("")
+        # print(next_url)
         if next_url:
-            yield Request(url=parse.urljoin(response.url, post_url), callback=self.parse)
+            print('go to next')
+            yield Request(url=parse.urljoin(response.url, next_url), callback=self.parse)
 
     def parse_detail(self, response):
         # article_item = JobBoleArticleItem()

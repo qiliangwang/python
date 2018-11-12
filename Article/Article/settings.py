@@ -74,9 +74,9 @@ ITEM_PIPELINES = {
     # 'Article.pipelines.JsonExporterPipeline': 3,
     # 'Article.pipelines.ArticleImagePipeline': 2,
     # 'Article.pipelines.MysqlPipeline': 1,
-    'Article.pipelines.MysqlTwistedPipeline': 1,
+    # 'Article.pipelines.MysqlTwistedPipeline': 1,
     # 'scrapy.pipelines.images.ImagesPipeline': 1,
-    # 'Article.pipelines.ElasticsearchPipeline': 1,
+    'Article.pipelines.ElasticSearchPipeline': 1,
 }
 IMAGES_URLS_FIELD = "front_image_url"
 project_dir = os.path.abspath(os.path.dirname(__file__))
