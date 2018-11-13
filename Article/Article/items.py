@@ -74,14 +74,14 @@ def gen_suggests(index, info_tuple):
     for text, weight in info_tuple:
         if text:
             # 调用es的analyze接口分析字符串
-            words = es.indices.analyze(index=index, analyzer="ik_max_word", params={'filter':["lowercase"]}, body=text)
-            anylyzed_words = set([r["token"] for r in words["tokens"] if len(r["token"])>1])
-            new_words = anylyzed_words - used_words
+            words = es.indices.analyze(index=index, analyzer="ik_max_word", params={'filter': ["lowercase"]}, body=text)
+            analyzed_words = set([r["token"] for r in words["tokens"] if len(r["token"]) > 1])
+            new_words = analyzed_words - used_words
         else:
             new_words = set()
 
         if new_words:
-            suggests.append({"input":list(new_words), "weight":weight})
+            suggests.append({"input": list(new_words), "weight": weight})
 
     return suggests
 
@@ -138,7 +138,7 @@ class JobBoleArticleItem(scrapy.Item):
         article.tags = self["tags"]
         article.meta.id = self["url_object_id"]
 
-        article.suggest = gen_suggests(ArticleType._doc_type.index, ((article.title,10),(article.tags, 7)))
+        article.suggest = gen_suggests(ArticleType._doc_type.index, ((article.title, 10), (article.tags, 7)))
 
         article.save()
 
@@ -149,10 +149,10 @@ class JobBoleArticleItem(scrapy.Item):
 
 def remove_splash(value):
     # 去掉工作城市的斜线
-    return value.replace("/","")
+    return value.replace("/", "")
 
 
 def handle_jobaddr(value):
     addr_list = value.split("\n")
-    addr_list = [item.strip() for item in addr_list if item.strip()!="查看地图"]
+    addr_list = [item.strip() for item in addr_list if item.strip() != "查看地图"]
     return "".join(addr_list)
