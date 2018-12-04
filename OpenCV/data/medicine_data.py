@@ -35,7 +35,9 @@ class MedicineData:
     def merge_folder_list(folder_list):
         data_list = []
         for folder in folder_list:
-            data_list.extend(os.listdir(folder))
+            simple_data_list = os.listdir(folder)
+            complete_data_list = [os.path.join(folder, data) for data in simple_data_list]
+            data_list.extend(complete_data_list)
         # clean data_list (remove.DB)
         remove_str = '.DS_Store'
         return [data for data in data_list if not data.endswith(remove_str)]
@@ -226,8 +228,8 @@ class MedicineData:
 
 def main():
     data = MedicineData()
-    print(data.normal_data)
-
+    print(len(data.normal_data))
+    print(len(data.pneumonia_data))
     # for e in range(20):
     #     for batch_x, batch_y in data.batch_iter(data_type='test', batch_size=1):
     #         pass
