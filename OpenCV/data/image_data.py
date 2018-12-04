@@ -22,12 +22,22 @@ def find_image(file_dir, file_list):
 
 def save_image(image, image_dir, image_number):
     base_dir = '../images'
+
     (file_path, complete_filename) = os.path.split(image_dir)
+    
     (filename, extension) = os.path.splitext(complete_filename)
+
     new_filename = str(image_number) + str(extension)
+
     image_dir = os.path.join(base_dir, new_filename)
+
     print('save' + image_dir)
-    resize_image(image, image_dir, edge=512)
+
+    data_dir = os.path.join(image_dir, 'data')
+    label_dir = os.path.join(image_dir, 'label')
+
+    resize_image(image, data_dir, edge=256)
+    resize_image(image, label_dir, edge=512)
     pass
 
 
