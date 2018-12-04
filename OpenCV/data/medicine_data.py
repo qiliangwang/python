@@ -218,10 +218,6 @@ class MedicineData:
         return cnf_matrix
         pass
 
-    # @staticmethod
-
-        # plt.show()
-
 
 def main():
     data = MedicineData()

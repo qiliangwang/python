@@ -73,12 +73,13 @@ class SuperResolutionData:
             yield shuffled_x[start_index:end_index], shuffled_y[start_index:end_index]
 
     @staticmethod
-    def plot_img(images):
+    def plot_img(images, count):
         image = np.zeros([512, 512, 3])
         for height in range(4):
             for width in range(4):
                 image[height * 128:height * 128 + 128, width * 128:width * 128 + 128, :] = images[4 * height + width]
-        return image
+        image_decode = image * 255
+        cv.imwrite('../images/result/' + str(count) + '.jpg', image_decode)
 
 
 def main():

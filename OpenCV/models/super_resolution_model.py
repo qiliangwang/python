@@ -31,23 +31,11 @@ class SuperResolutionNet(object):
             x5 = tf.layers.conv2d(x4, 1024, kernel_size=[7, 7], strides=[1, 1], padding='same', activation=tf.nn.leaky_relu)
             print(x5)
 
-            # x6 = tf.layers.dense(tf.layers.flatten(x5), 2048, activation=tf.nn.relu)
-            # print(x6)
-
-            # x7 = tf.layers.dense(x6, 1024, activation=tf.nn.relu)
-            # print(x7)
-
             return x5
         pass
 
     def encoder(self):
         with tf.variable_scope('encoder'):
-
-            # x6 = tf.layers.dense(self.compressed, 2048, activation=tf.nn.relu)
-            # print(x6)
-
-            # x5 = tf.reshape(tf.layers.dense(self.compressed, 1024*4*4, activation=tf.nn.relu), (-1, 4, 4, 1024))
-            # print(x5)
 
             x4 = tf.layers.conv2d_transpose(self.compressed, 512, kernel_size=[7, 7], strides=[1, 1], padding='same', activation=tf.nn.leaky_relu)
             print(x4)
