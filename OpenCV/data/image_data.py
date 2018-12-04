@@ -24,7 +24,7 @@ def save_image(image, image_dir, image_number):
     base_dir = '../images'
 
     (file_path, complete_filename) = os.path.split(image_dir)
-    
+
     (filename, extension) = os.path.splitext(complete_filename)
 
     new_filename = str(image_number) + str(extension)

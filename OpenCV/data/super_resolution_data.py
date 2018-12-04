@@ -17,6 +17,7 @@ class SuperResolutionData:
     def parse_img(path, num, dim):
         img = cv.imread(path)
         img = img / 255.0
+
         images = []
         len_x = img.shape[0] // num
         for height in range(num):
@@ -27,10 +28,18 @@ class SuperResolutionData:
                 images.append(temp_img)
         return images
 
+    def convert_paths_to_nd_array(self, paths, num):
+        images = []
+        for path in paths:
+            img = self.parse_img(path, num, 128)
+            images.extend(img)
+        images = np.concatenate(images)
+        return images
+
     def build_data(self, epochs, batch_size, shuffle=True):
         for epoch in range(epochs):
             for batch_x, batch_y in self.batch_iter(self.data, self.label, batch_size, shuffle):
-                yield batch_x, batch_y
+                yield self.convert_paths_to_nd_array(batch_x, 4), self.convert_paths_to_nd_array(batch_y, 4)
         pass
 
     @staticmethod
@@ -74,8 +83,8 @@ class SuperResolutionData:
 
 def main():
     data = SuperResolutionData()
-    for batch_x, batch_y in data.build_data(20, 20):
-        print(batch_x, batch_y)
+    for batch_x, batch_y in data.build_data(20, 2):
+        print(batch_x.shape, batch_y.shape)
 
 
 if __name__ == '__main__':
